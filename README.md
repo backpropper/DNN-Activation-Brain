@@ -4,17 +4,18 @@ I have developed a toolkit which visualizes the hidden layer activations of a de
 Work is constantly been updated.
 
 Libraries required (for Linux):
-	Run the following commands on Debian/Ubuntu systems (Package name same in other distros):
+	*Run the following commands on Debian/Ubuntu systems (Package name same in other distros):
 	- sudo apt-get install python python-numpy python-scipy python-matplotlib python-pip python-opengl python-qt4*
 	- python pip -m install pyaudio
--- For installing Kaldi:
+	*For installing Kaldi:
 	- First cd into the directory where you have downloaded current repository.
-	- git clone https://github.com/abhinavgupta94/kaldi.git kaldi --origin golden
+	- git clone https://github.com/abhinavgupta94/kaldi.git kaldi
 	- cd kaldi/tools/; make; cd ../src; ./configure; make
 
 
 Files explained:
 - slider.py: Main python application file
+- lda - folder conatining "vertices" and "indices" file for each of the layers
 - vertices: a 2048 x 2 matrix (each row is a 2D coordinate for each hidden unit computed using t-SNE plots)
 - indices: a 4069 x 3 matrix (each row is a tuple containing indices to the vertices that form a triangle computed after Delaunay Triangulation)
 - getact.sh: bash file to get activations from the Kaldi model. Creates the activations file. Need to change the Kaldi installation path at the top of the file.

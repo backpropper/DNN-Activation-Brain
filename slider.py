@@ -2,7 +2,7 @@
 
 # Copyright 2015 National University of Singapore (Author: Abhinav Gupta)
 
-from sklearn.preprocessing import *
+from sklearn.preprocessing import MinMaxScaler
 from PyQt4.phonon import Phonon
 import sys
 import os
@@ -38,7 +38,8 @@ fragment_code = """
     } """
 
 # no of layers of DNN to show in the GUI.
-number = 4
+with open("layers") as f:
+    number = int(f.read())
 
 # class Window - Responsible for the User Interface of the toolkit. Acts as a means to interactively communicate with the OpenGL graphics rendering class FrWidget.
 
