@@ -1,6 +1,6 @@
-# Activation-Brain-of-a-DNN
+# DNN-Activation-Brain
 
-I have developed a toolkit which visualizes the hidden layer activations of a deep neural network. I used t-SNE plots to get the coordinates and after computing Delaunay Triangulation, I got the 2D space vectors. I used OpenGL shader libraries in python for rendering graphics. The toolkit allows loading different models for visualization. It has a functionality of recording live audio samples which are subsequently feedforwarded through a deep neural network in Kaldi to get the activations.
+I have developed a toolkit which visualizes the hidden layer activations of a deep neural network. I used OpenGL shader libraries in python for rendering graphics. The toolkit allows loading different models for visualization. It has a functionality of recording live audio samples which are subsequently feedforwarded through a deep neural network in Kaldi to get the activations.
 Work is constantly been updated.
 
 Libraries required (for Linux):
@@ -8,8 +8,9 @@ Libraries required (for Linux):
 	- sudo apt-get install python python-numpy python-scipy python-matplotlib python-pip python-opengl python-qt4*
 	- python pip -m install pyaudio
 -- For installing Kaldi:
-	- git clone https://github.com/abhinavgupta94/kaldi.git kaldi-trunk --origin golden
-	- cd kaldi-trunk/tools/; make; cd ../src; ./configure; make
+	- First cd into the directory where you have downloaded current repository.
+	- git clone https://github.com/abhinavgupta94/kaldi.git kaldi --origin golden
+	- cd kaldi/tools/; make; cd ../src; ./configure; make
 
 
 Files explained:
@@ -21,5 +22,5 @@ Files explained:
 
 How to run:
 - Run python slider.py.
-- After the window opens, select Upload Model and choose the directory where the "vertices" and "indices" files are present (here it is the "model" directory). 
+- After the window opens, select Upload Model and choose the directory where the folder containing the "vertices" and "indices" of all the layers are present files are present along with the other DNN model files (here it is the "model" directory). 
 - Then select start recording to start recording the live audio sample. Select stop recording to stop it and see the magic.
