@@ -1,7 +1,7 @@
 #!/bin/bash
 
 model=$1
-kaldipath=$2/kaldi-trunk
+kaldipath=$2/kaldi
 featpath=$kaldipath/src/featbin
 nnetpath=$kaldipath/src/nnetbin
 

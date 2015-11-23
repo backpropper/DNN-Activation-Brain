@@ -3,12 +3,14 @@
 I have developed a toolkit which visualizes the hidden layer activations of a deep neural network. I used t-SNE plots to get the coordinates and after computing Delaunay Triangulation, I got the 2D space vectors. I used OpenGL shader libraries in python for rendering graphics. The toolkit allows loading different models for visualization. It has a functionality of recording live audio samples which are subsequently feedforwarded through a deep neural network in Kaldi to get the activations.
 Work is constantly been updated.
 
-Libraries required:
-- Linux:
+Libraries required (for Linux):
 	Run the following commands on Debian/Ubuntu systems (Package name same in other distros):
 	- sudo apt-get install python python-numpy python-scipy python-matplotlib python-pip python-opengl python-qt4*
 	- python pip -m install pyaudio
-	* For installing Kaldi refer to http://kaldi.sourceforge.net/tutorial_setup.html
+-- For installing Kaldi:
+	- git clone https://github.com/abhinavgupta94/kaldi.git kaldi-trunk --origin golden
+	- cd kaldi-trunk/tools/; make; cd ../src; ./configure; make
+
 
 Files explained:
 - slider.py: Main python application file

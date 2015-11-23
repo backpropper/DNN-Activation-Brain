@@ -36,6 +36,7 @@ fragment_code = """
     {
         gl_FragColor = v_color;
     } """
+
 # no of layers of DNN to show in the GUI.
 number = 4
 
