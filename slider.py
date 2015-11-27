@@ -4,6 +4,10 @@
 
 from sklearn.preprocessing import MinMaxScaler
 from PyQt4.phonon import Phonon
+import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+import matplotlib.cm as cmx
+import matplotlib.cm as cm
 import sys
 import os
 import shlex
@@ -92,7 +96,7 @@ class Window(QtGui.QWidget):
         self.square.setStyleSheet("background-color: rgb(255,0,0)")
         self.square.setText("Recording")
         if self.frames:        
-            for widget in self.frSlider,self.lineedit,self.frameno,self.gobutton,self.playButton,self.pauseButton,self.stopButton:
+            for widget in self.frSlider,self.lineedit,self.frameno,self.gobutton,self.playButton,self.pauseButton,self.stopButton, self.playsongButton:
                 self.mainLayout.removeWidget(widget)
                 widget.deleteLater()
                 widget = None
@@ -160,7 +164,10 @@ class Window(QtGui.QWidget):
 
     # select a pre-recorded wav file instead of recording live audio.
     def selectwav(self):
-        self.createfile(str(self.wavpathBox.text()))
+        wavfile2 = QtGui.QFileDialog.getOpenFileName(self, "Select file")
+        self.wavpathBox.setText(wavfile2)
+        self.progress.setValue(30)
+        self.createfile(wavfile2)
 
     def playsong(self):
         if self.player.state() == Phonon.PlayingState:
@@ -187,6 +194,8 @@ class Window(QtGui.QWidget):
         global real_ver                                             
         real_ver=[[] for i in range(number)]
         
+        global verlist
+        verlist = [dict() for i in range(number)]
         for i in range(number):
             indices = self.foldername + "/lda/" + str(i+1) + "/indices"                        # file containing the set of vertices after Delaunay Triangulation.
             with open(indices) as f:
@@ -195,7 +204,33 @@ class Window(QtGui.QWidget):
                     real_ver[i].append(self.vertices[i][p[0]-1])                 # store vertices in sets of 3 in order to create a triangle 
                     real_ver[i].append(self.vertices[i][p[1]-1])                 # as specified in the indices file
                     real_ver[i].append(self.vertices[i][p[2]-1])
-        self.progress.setValue(20)        
+                    
+                    if p[0] in verlist[i]:
+                        verlist[i][p[0]].append(p[1])
+                        verlist[i][p[0]].append(p[2])
+                    else:
+                        verlist[i][p[0]] = [p[1]]
+                        verlist[i][p[0]].append(p[2])
+                    
+                    if p[1] in verlist[i]:
+                        verlist[i][p[1]].append(p[0])
+                        verlist[i][p[1]].append(p[2])
+                    else:
+                        verlist[i][p[1]] = [p[0]]
+                        verlist[i][p[1]].append(p[2])
+
+                    if p[2] in verlist[i]:
+                        verlist[i][p[2]].append(p[0])
+                        verlist[i][p[2]].append(p[1])
+                    else:
+                        verlist[i][p[2]] = [p[0]]
+                        verlist[i][p[2]].append(p[1])
+
+                    verlist[i][p[0]] = list(set(verlist[i][p[0]]))
+                    verlist[i][p[1]] = list(set(verlist[i][p[1]]))
+                    verlist[i][p[2]] = list(set(verlist[i][p[2]]))
+
+        self.progress.setValue(20)
 
     # pass the recorded audio wav file through the given DNN model in Kaldi to get the activations. 
     def createfile(self,filename):
@@ -230,27 +265,60 @@ class Window(QtGui.QWidget):
         # global number
         # number = i
         self.progress.setValue(70)    
+        
         for l in range(number):
             for fr in range(len(data[l])):
                 maxi=max(data[l][fr])
                 data[l][fr] = [i/maxi for i in data[l][fr]]
                 # minmax = MinMaxScaler()
                 # data[l][fr] = minmax.fit_transform(data[l][fr]).tolist()        
-        
+                
+        alpha = 0.25
+        vcol=[[] for i in range(number)]
+        for l in range(number):
+            for fr in range(len(data[l])):
+                vcol[l].append([])
+                for j in range(len(data[l][fr])):
+                    adjver = verlist[l][j+1]
+                    sum = (1-alpha)*data[l][fr][j]
+                    for ver in adjver:
+                        sum = sum + alpha*data[l][fr][ver-1]
+                    vcol[l][fr].append(sum/(1-alpha+(alpha*len(adjver))))
+        '''
+        alpha = 0.5
+        fcol=[[] for i in range(number)]
+        for l in range(number):
+            for fr in range(len(data[l])):
+                fcol[l].append([])
+                for j in range(len(data[l][fr])):
+                    adjver = verlist[l][j+1]
+                    sum = (1-alpha)*vcol[l][fr][j]
+                    for ver in adjver:
+                        sum = sum + alpha*vcol[l][fr][ver-1]
+                    fcol[l][fr].append(sum/(1-alpha+(alpha*len(adjver))))
+        '''
         self.progress.setValue(75)
-
+        
+        #jet = cm = plt.get_cmap('jet') 
+        #cNorm  = colors.Normalize()
+        #scalarMap = cmx.ScalarMappable(norm=cNorm, cmap=jet)
         # give color to each vertex of the triangle according to the activation of that neuron
         col=[[] for i in range(number)]
         for l in range(number):
             for fr in range(len(data[l])):
                 col[l].append([])
-                for j in data[l][fr]:
+                #col[l][fr] = scalarMap.to_rgba(vcol[l][fr])
+                col[l][fr] = cm.jet(plt.Normalize(min(vcol[l][fr]),max(vcol[l][fr]))(vcol[l][fr])).tolist()
+                '''
+                for j in vcol[l][fr]:
                     col[l][fr].append((j,0,0,1))            # can change the position of j to (0,j,0,1) for green or (0,0,j,1) for blue color gradient. 
+                '''        
         
         self.progress.setValue(80)                          # Uses RGBA format. '1' enables transparency.
         self.frames = len(col[0])                   # total no of frames in the wav file.
         print "No. of frames ",self.frames
-        
+
+
         global real_col
         real_col=[[] for i in range(number)]
         for i in range(number):
@@ -266,9 +334,10 @@ class Window(QtGui.QWidget):
                         real_col[i][fr].append(col[i][fr][p[1]-1])
                         real_col[i][fr].append(col[i][fr][p[2]-1])
                     k=1
-        
+                
         self.progress.setValue(90)
-        
+
+
         self.resize(1200,600)        
         self.move(100,50)
 

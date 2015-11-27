@@ -7,7 +7,7 @@ This is a toolkit to visualize the hidden layers of a Deep Neural Network. Curre
 	- sudo apt-get install python python-numpy python-scipy python-matplotlib python-pip python-opengl python-qt4*
 	- python pip -m install pyaudio
 	#### For installing Kaldi:
-	- First cd into the directory where you downloaded this repository. Then run the following commands
+	- First cd into the directory where you downloaded this repository. Then run the following commands.
 	- git clone https://github.com/abhinavgupta94/kaldi.git kaldi
 	- cd kaldi/tools/; make; cd ../src; ./configure; make
 
