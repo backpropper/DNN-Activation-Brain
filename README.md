@@ -32,4 +32,4 @@ This is a toolkit to visualize the hidden layers of a Deep Neural Network. Curre
 - Integrating other types of features such as FMLLR.
 
 ## Author:
-### Abhinav Gupta
+Abhinav Gupta
