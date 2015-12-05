@@ -12,7 +12,7 @@ This is a toolkit to visualize the hidden layers of a Deep Neural Network. Curre
 	- cd kaldi/tools/; make; cd ../src; ./configure; make
 
 ### Files explained:
-- slider.py: Main python application file
+- deepbrain.py: Main python application file
 - getact.sh: bash file to get activations from the Kaldi model. Creates the activations file. Need to change the Kaldi installation path at the top of the file.
 - activities & activities.realtime: sample activations of previously recorded wav files (can be used instead of recording live audio or if Kaldi is not installed)
 - layers: text file containing the number of layers to display in the application
