@@ -29,7 +29,7 @@ This is a toolkit to visualize the hidden layers of a Deep Neural Network. Curre
 
 ## TODO:
 - Add support for other DNN models such as Theano.
-- Integrating other types of features such as FMLLR.
+- Integrating other types of features such as fMLLR.
 
 ## Author:
 Abhinav Gupta
