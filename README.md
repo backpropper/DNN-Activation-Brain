@@ -1,6 +1,6 @@
 # DNN-Activation-Brain
 
-This is a toolkit to visualize the hidden layers of a Deep Neural Network. Currently it takes a Kaldi model as input and takes in LDA features as input to the DNN model.
+This is a toolkit to visualize the hidden layers of a Deep Neural Network. Currently it takes a Kaldi model as input and takes in MFCC features with LDA as input to the DNN model.
 
 ## Libraries required (for Linux):
 	### Run the following commands on Debian/Ubuntu systems (Package name same in other distros):
@@ -28,7 +28,7 @@ This is a toolkit to visualize the hidden layers of a Deep Neural Network. Curre
 - You can also record another audio sample by clicking the start recording button again. This will refresh the GUI to display the activations of the newly recorded audio sample.
 
 ## TODO:
-- Add support for other DNN models such as Theano.
+- Add support for other more complex DNN models (with ivcetors).
 - Integrating other types of features such as fMLLR.
 
 ## Author:
