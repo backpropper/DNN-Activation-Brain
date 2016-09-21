@@ -1,6 +1,6 @@
 # DNN-Activation-Brain
 
-This is a toolkit to visualize the hidden layers of a Deep Neural Network. Currently it takes a Kaldi model as input and takes in MFCC features with LDA as input to the DNN model.
+This is a toolkit to visualize the hidden layers of a Deep Neural Network. Currently it takes a Kaldi model as input and takes in MFCC features with LDA as input to the DNN model. A snapshot of the application can be found in Snapshot.png.
 
 ## Libraries required (for Linux):
 	### Run the following commands on Debian/Ubuntu systems (Package name same in other distros):
