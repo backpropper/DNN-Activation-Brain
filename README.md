@@ -13,7 +13,7 @@ python pip -m install pyaudio
 
 For installing Kaldi, run the following commands:
 ```
-git clone https://github.com/abhinavgupta94/kaldi.git kaldi
+git clone https://github.com/backpropper/kaldi.git kaldi
 cd kaldi/tools/; make; cd ../src; ./configure; make
 ```
 
