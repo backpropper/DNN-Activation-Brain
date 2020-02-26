@@ -3,7 +3,7 @@ DNN-Activation-Brain
 
 Deep Neural Network (DNN) is a powerful machine learning model with successful application in a wide range of pattern classification tasks. Despite its superior performance in handling complex real-world problems, DNNs have been used pretty much as a black box, without offering much insights in terms of how and why high quality classification performance has been achieved. We will demonstrate a novel DNN interpretation technique, where the activity patterns are used to project the hidden units of the DNN onto a meaningful 2-dimensional hidden activity space using the t-distribution Stochastic Neighbour Embedding (t-SNE). Hidden units with similar activity patterns are placed closer to one another in this space and interpretable regions can be constructed to with respect to the phone attribute. Hidden units within a specific phone region have a higher probability of being active with respect to that phone. The projected points are displayed with colours to reflect the activation values for the purpose of visualisation. This demo will showcase a DNN visualisation tool that can be used to display the changes in the activity pattern over time for all the hidden units in different hidden layers.
 
-Currently, it takes a trained model in Kaldi as input and records an audio which is fed as input to the DNN model. It extracts MFCC features from the recorded audio and does LDA for dimensionality reduction. The hidden activations for each DNN layer are then displayed using an interatcive GUI animating over each frame of the audio. Here's a snapshot of the application.
+Currently, it takes a trained model in Kaldi as input and records an audio which is fed as input to the DNN model. It extracts MFCC features from the recorded audio and does LDA for dimensionality reduction. The hidden activations for each DNN layer are then displayed using an interatcive GUI animating over each frame of the audio. Here's a snapshot of the application:
 
 ![Snapshot](Snapshot.png)
 
@@ -44,8 +44,7 @@ If you find the resources in this repository useful, please consider citing:
 ```
 @incollection{gupta16demo,
     title = {Dissecting the DNN Brain for a Better Insight},
-    booktitle = {IEEE International Conference on
-Acoustics, Speech and Signal Processing},
+    booktitle = {IEEE International Conference on Acoustics, Speech and Signal Processing},
     author = {Abhinav Gupta and Khe Chai Sim},
     note = {Show \& Tell Demonstrations}
     year = 2016,
